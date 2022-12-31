@@ -1,6 +1,6 @@
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="http://kamilmysliwiec.com/public/nest-logo.png#1" alt="Nest Logo" />   </a>
-  <a href="https://min.io" target="_blank"><img src="https://min.io/resources/img/logo.svg" width="380"></a>
+  <a href="https://min.io" target="_blank"><img src="https://i.imgur.com/1UkYh1o.png" width="150"></a>
 </p>
 
 <p align="center">Cloudinary Module for Nest framework</p>
