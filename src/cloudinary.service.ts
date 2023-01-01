@@ -10,9 +10,9 @@ import {
 } from 'cloudinary';
 import sharp from 'sharp';
 
-import { MODULE_OPTIONS_TOKEN } from '../src/cloudinary.module-definition';
 import { CloudinaryModuleOptions } from './cloudinary.options';
 import { IFile, ISharpInputOptions } from './interfaces';
+import { MODULE_OPTIONS_TOKEN } from './cloudinary.module-definition';
 
 @Injectable()
 export class CloudinaryService {
