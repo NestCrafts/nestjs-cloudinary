@@ -3,6 +3,7 @@ import { Readable } from 'node:stream';
 
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import {
+	ResourceType,
 	UploadApiErrorResponse,
 	UploadApiOptions,
 	UploadApiResponse,
@@ -11,8 +12,13 @@ import {
 import sharp from 'sharp';
 
 import { CloudinaryModuleOptions } from './cloudinary.options';
-import { IFile, ISharpInputOptions } from './interfaces';
+import {
+	IFile,
+	ISharpInputOptions,
+	ISignedUploadUrlOptions,
+} from './interfaces';
 import { MODULE_OPTIONS_TOKEN } from './cloudinary.module-definition';
+import { defaultCreateSignedUploadUrlOptions } from './cloudinary.constant';
 
 @Injectable()
 export class CloudinaryService {
@@ -80,5 +86,54 @@ export class CloudinaryService {
 
 			stream.pipe(upload);
 		});
+	}
+
+	/**
+	 * It returns a signed upload URL.
+	 * @see https://cloudinary.com/documentation/signatures#using_cloudinary_backend_sdks_to_generate_sha_authentication_signatures
+	 * @param {string} publicId - This is the public id of the file.
+	 * @param {ResourceType} resourceType - The type of the resource. See ./node_modules/cloudinary/types/index.d.ts
+	 * @param {ISignedUploadUrlOptions} [options] - This is an object that contains the options for signing.
+	 * @returns string
+	 */
+	async createSignedUploadUrl(
+		publicId: string,
+		resourceType: ResourceType,
+		options?: ISignedUploadUrlOptions,
+	) {
+		options = { ...defaultCreateSignedUploadUrlOptions, ...options };
+
+		const cloudName = this.options.cloud_name;
+		const apiKey = this.options.api_key;
+		const apiSecret = this.options.api_secret;
+
+		const url = `https://api.cloudinary.com/v1_1/${this.options.cloud_name}/${resourceType}/upload`;
+		const timestamp = Math.floor(Date.now() / 1000).toString();
+
+		cloudinary.config({
+			cloud_name: cloudName,
+			api_key: apiKey,
+			api_secret: apiSecret,
+		});
+
+		const signature = await cloudinary.utils.api_sign_request(
+			{
+				timestamp,
+				folder: options.folder,
+				eager: options.eager,
+				public_id: publicId,
+			},
+			this.options.api_secret,
+		);
+
+		return {
+			url,
+			publicId,
+			apiKey,
+			timestamp,
+			eager: options.eager,
+			folder: options.folder,
+			signature,
+		};
 	}
 }
