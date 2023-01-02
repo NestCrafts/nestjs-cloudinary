@@ -23,11 +23,14 @@ import { defaultCreateSignedUploadUrlOptions } from './cloudinary.constant';
 @Injectable()
 export class CloudinaryService {
 	private logger = new Logger(CloudinaryService.name);
+	public readonly cloudinary = cloudinary;
 
 	constructor(
 		@Inject(MODULE_OPTIONS_TOKEN)
 		private readonly options: CloudinaryModuleOptions,
-	) {}
+	) {
+		this.cloudinary.config(Object.assign({}, options));
+	}
 
 	/**
 	 * It takes a file, uploads it to cloudinary, and returns a promise
@@ -45,12 +48,6 @@ export class CloudinaryService {
 		sharpOptions?: ISharpInputOptions,
 	): Promise<UploadApiResponse | UploadApiErrorResponse> {
 		return new Promise(async (resolve, reject) => {
-			cloudinary.config({
-				cloud_name: this.options.cloudName,
-				api_key: this.options.apiKey,
-				api_secret: this.options.apiSecret,
-			});
-
 			const upload = cloudinary.uploader.upload_stream(
 				options,
 				(
@@ -103,20 +100,10 @@ export class CloudinaryService {
 	) {
 		options = { ...defaultCreateSignedUploadUrlOptions, ...options };
 
-		const cloudName = this.options.cloud_name;
-		const apiKey = this.options.api_key;
-		const apiSecret = this.options.api_secret;
-
 		const url = `https://api.cloudinary.com/v1_1/${this.options.cloud_name}/${resourceType}/upload`;
 		const timestamp = Math.floor(Date.now() / 1000).toString();
 
-		cloudinary.config({
-			cloud_name: cloudName,
-			api_key: apiKey,
-			api_secret: apiSecret,
-		});
-
-		const signature = await cloudinary.utils.api_sign_request(
+		const signature = this.cloudinary.utils.api_sign_request(
 			{
 				timestamp,
 				folder: options.folder,
@@ -129,11 +116,19 @@ export class CloudinaryService {
 		return {
 			url,
 			publicId,
-			apiKey,
+			apiKey: this.options.api_key,
 			timestamp,
 			eager: options.eager,
 			folder: options.folder,
 			signature,
 		};
+	}
+
+/**
+ * It returns the cloudinary instance.
+ * @returns The cloudinary instance.
+ */
+	get cloudinaryInstance() {
+		return this.cloudinary;
 	}
 }
