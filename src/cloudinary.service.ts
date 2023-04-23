@@ -32,6 +32,18 @@ export class CloudinaryService {
 		this.cloudinary.config(Object.assign({}, options));
 	}
 
+	pingCloudinary() {
+		cloudinary.api
+			.ping()
+			.then(res => {
+				this.logger.log(`Cloudinary connection ${res.status}`);
+			})
+			.catch(err => {
+				this.logger.warn('Cloudinary connection failed.');
+				this.logger.error(err.error);
+			});
+	}
+
 	/**
 	 * It takes a file, uploads it to cloudinary, and returns a promise
 	 * @param {IFile} file - IFile - This is the file object that is passed to the uploadFile method.
@@ -48,6 +60,7 @@ export class CloudinaryService {
 		sharpOptions?: ISharpInputOptions,
 	): Promise<UploadApiResponse | UploadApiErrorResponse> {
 		return new Promise(async (resolve, reject) => {
+			cloudinary.api.ping;
 			const upload = cloudinary.uploader.upload_stream(
 				options,
 				(
@@ -124,10 +137,10 @@ export class CloudinaryService {
 		};
 	}
 
-/**
- * It returns the cloudinary instance.
- * @returns The cloudinary instance.
- */
+	/**
+	 * It returns the cloudinary instance.
+	 * @returns The cloudinary instance.
+	 */
 	get cloudinaryInstance() {
 		return this.cloudinary;
 	}
