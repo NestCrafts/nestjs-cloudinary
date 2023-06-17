@@ -33,7 +33,7 @@
 	"bugs": "https://github.com/rubiin/nestjs-cloudinary/issues",
 	"dependencies": {
 		"cloudinary": "^1.37.1",
-		"sharp": "^0.32.1"
+		"sharp": "^0.31.3"
 	},
 	"peerDependencies": {
 		"@nestjs/common": ">7.0.0"
