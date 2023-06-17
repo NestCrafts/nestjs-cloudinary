@@ -9,7 +9,7 @@ import {
 	UploadApiResponse,
 	v2 as cloudinary,
 } from 'cloudinary';
-import * as sharp from 'sharp';
+import sharp = require('sharp');
 
 import { CloudinaryModuleOptions } from './cloudinary.options';
 import {

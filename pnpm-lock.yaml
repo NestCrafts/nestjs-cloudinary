@@ -22,6 +22,9 @@ devDependencies:
   '@nestjs/testing':
     specifier: 10.0.0
     version: 10.0.0(@nestjs/common@10.0.0)(@nestjs/core@10.0.0)
+  '@rubiin/tsconfig':
+    specifier: ^1.0.1
+    version: 1.0.1
   '@types/jest':
     specifier: 29.5.2
     version: 29.5.2
@@ -938,6 +941,11 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@rubiin/tsconfig@1.0.1:
+    resolution: {integrity: sha512-LrHldhbqN2n9LKE54gKgpb4+1GVK/ixyB7tjZxgU9cboksTkZTV3AnOZ/d+ITipaT2Imi1tgq+cJ77MScAFbIg==}
+    engines: {node: '>=18'}
+    dev: true
 
   /@sinclair/typebox@0.25.21:
     resolution: {integrity: sha512-gFukHN4t8K4+wVC+ECqeqwzBDeFeTzBXroBTqE6vcWrQGbEUpHO7LYdG0f4xnvYq4VOEwITSlHlp0JBAIFMS/g==}
