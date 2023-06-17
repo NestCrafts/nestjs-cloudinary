@@ -39,9 +39,9 @@
 		"@nestjs/common": ">7.0.0"
 	},
 	"devDependencies": {
-		"@nestjs/common": "^10.0.0",
-		"@nestjs/core": "^10.0.0",
-		"@nestjs/testing": "10.0.0",
+		"@nestjs/common": "^10.0.1",
+		"@nestjs/core": "^10.0.1",
+		"@nestjs/testing": "10.0.1",
 		"@rubiin/tsconfig": "^1.0.1",
 		"@types/jest": "29.5.2",
 		"@types/node": "20.3.1",
