@@ -23,8 +23,8 @@ devDependencies:
     specifier: 10.0.1
     version: 10.0.1(@nestjs/common@10.0.1)(@nestjs/core@10.0.1)
   '@rubiin/tsconfig':
-    specifier: ^1.0.1
-    version: 1.0.1
+    specifier: ^1.0.2
+    version: 1.0.2
   '@types/jest':
     specifier: 29.5.2
     version: 29.5.2
@@ -942,8 +942,8 @@ packages:
     dev: true
     optional: true
 
-  /@rubiin/tsconfig@1.0.1:
-    resolution: {integrity: sha512-LrHldhbqN2n9LKE54gKgpb4+1GVK/ixyB7tjZxgU9cboksTkZTV3AnOZ/d+ITipaT2Imi1tgq+cJ77MScAFbIg==}
+  /@rubiin/tsconfig@1.0.2:
+    resolution: {integrity: sha512-ZXSFEM3D+Kiy0tF71pxiYnREN54BEVxauRvrDhuT1ll3PdKkStxSW1eK2gDN0WMaETwRArY+hqKkxZDXRoY2JQ==}
     engines: {node: '>=18'}
     dev: true
 
