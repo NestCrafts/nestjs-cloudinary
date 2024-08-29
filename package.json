@@ -1,6 +1,6 @@
 {
 	"name": "nestjs-cloudinary",
-	"version": "2.1.0",
+	"version": "2.1.1",
 	"description": "Cloudinary module for nestjs",
 	"author": "Rubin Bhandari <roobin.bhandari@gmail.com>",
 	"license": "MIT",
