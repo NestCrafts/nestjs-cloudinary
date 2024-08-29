@@ -10,6 +10,7 @@
     "target": "es2021",
     "sourceMap": false,
     "baseUrl": "./",
+    "outDir": "dist",
     "incremental": true,
     "newLine":"lf"
   },
