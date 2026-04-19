@@ -12,11 +12,7 @@ import {
 import sharp from 'sharp';
 
 import { CloudinaryModuleOptions } from './cloudinary.options';
-import {
-	IFile,
-	ISharpInputOptions,
-	ISignedUploadUrlOptions,
-} from './interfaces';
+import { IFile, ISharpInputOptions, ISignedUploadUrlOptions } from './interfaces';
 import { MODULE_OPTIONS_TOKEN } from './cloudinary.module-definition';
 import { defaultCreateSignedUploadUrlOptions } from './cloudinary.constant';
 
@@ -59,45 +55,34 @@ export class CloudinaryService {
 		options?: UploadApiOptions,
 		sharpOptions?: ISharpInputOptions,
 	): Promise<UploadApiResponse | UploadApiErrorResponse> {
-		return new Promise(async (resolve, reject) => {
-			cloudinary.api.ping;
+		const stream: Readable = new Readable();
+
+		if (sharpOptions && file.mimetype.match(/^image/)) {
+			const resizeOptions = { width: 800, ...sharpOptions };
+
+			const shrinkedImage = await sharp(file.buffer).resize(resizeOptions).toBuffer();
+
+			stream.push(shrinkedImage);
+		} else {
+			stream.push(file.buffer);
+		}
+
+		stream.push(null);
+
+		return new Promise((resolve, reject) => {
 			const upload = cloudinary.uploader.upload_stream(
 				options,
-				(
-					error: any,
-					result:
-						| UploadApiResponse
-						| UploadApiErrorResponse
-						| PromiseLike<UploadApiResponse | UploadApiErrorResponse>,
-				) => {
-					if (error) {
-						this.logger.error(error);
+				(err?: UploadApiErrorResponse, result?: UploadApiResponse) => {
+					if (result) return resolve(result);
 
-						return reject(error);
-					} else {
-						resolve(result);
-					}
+					this.logger.error(err);
+					reject(err);
 				},
 			);
-
-			const stream: Readable = new Readable();
-
-			if (sharpOptions && file.mimetype.match(/^image/)) {
-				const options = { width: 800, ...sharpOptions };
-				const shrinkedImage = await sharp(file.buffer)
-					.resize(options)
-					.toBuffer();
-
-				stream.push(shrinkedImage);
-			} else {
-				stream.push(file.buffer);
-			}
-			stream.push(null);
 
 			stream.pipe(upload);
 		});
 	}
-
 	/**
 	 * It returns a signed upload URL.
 	 * @see https://cloudinary.com/documentation/signatures#using_cloudinary_backend_sdks_to_generate_sha_authentication_signatures
@@ -123,7 +108,7 @@ export class CloudinaryService {
 				eager: options.eager,
 				public_id: publicId,
 			},
-			this.options.api_secret,
+			this.options.api_secret!,
 		);
 
 		return {

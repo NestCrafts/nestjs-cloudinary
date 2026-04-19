@@ -16,7 +16,7 @@ jobs:
 
       - run: pnpm install --shamefully-hoist
       - run: pnpm build
-      
+
   release:
     name: release
     if: ${{ github.ref == 'refs/heads/master' }}
