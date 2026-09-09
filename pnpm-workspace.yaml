@@ -4,9 +4,11 @@ shamefullyHoist: true
 
 # dependency behavior
 dedupeDirectDeps: true
-legacyPeerDeps: true
+
 
 ignoreWorkspaceRootCheck: true
 shellEmulator: true
 
-trustPolicy: no-downgrade
+minimumReleaseAge: 0
+allowBuilds:
+  sharp: true

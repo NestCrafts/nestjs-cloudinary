@@ -1,10 +1,30 @@
 {
 	"$schema": "./node_modules/oxfmt/configuration_schema.json",
-	"ignorePatterns": [],
-	"trailingComma": "all",
-	"semi": true,
+	"printWidth": 100,
 	"singleQuote": true,
+	"semi": false,
+	"tabWidth": 2,
+	"useTabs": true,
+	"trailingComma": "all",
+	"arrowParens": "always",
 	"bracketSpacing": true,
-	"arrowParens": "avoid",
-	"useTabs": true
+	"endOfLine": "lf",
+	"ignorePatterns": [
+		"node_modules/**",
+		".output/**",
+		".nitro/**",
+		".content-collections/**",
+		".tanstack/**",
+		"src/routeTree.gen.ts",
+		"public/**",
+		"content/**",
+		"docs/**",
+		".superpowers/**",
+		"pnpm-lock.yaml",
+		"pnpm-workspace.yaml",
+		"README.md",
+		"LICENSE*",
+		"dist",
+		"out"
+	]
 }
