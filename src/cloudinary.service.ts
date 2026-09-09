@@ -31,10 +31,10 @@ export class CloudinaryService {
 	pingCloudinary() {
 		cloudinary.api
 			.ping()
-			.then(res => {
+			.then((res) => {
 				this.logger.log(`Cloudinary connection ${res.status}`);
 			})
-			.catch(err => {
+			.catch((err) => {
 				this.logger.warn('Cloudinary connection failed.');
 				this.logger.error(err.error);
 			});
