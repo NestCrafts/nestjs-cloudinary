@@ -6,6 +6,7 @@
 		"lib": ["ES2022"],
 		"declaration": true,
 		"target": "ES2022",
+		"isolatedModules": false,
 		"declarationMap": true,
 		"rootDir": "./src",
 		"types": ["vitest/globals", "node"]
